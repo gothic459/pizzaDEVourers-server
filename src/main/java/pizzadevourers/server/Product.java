@@ -56,4 +56,15 @@ public class Product {
     public void setVat(int vat) {
         this.vat = vat;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "_id='" + _id + '\'' +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", price=" + price +
+                ", vat=" + vat +
+                '}';
+    }
 }
