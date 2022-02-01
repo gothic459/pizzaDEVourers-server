@@ -1,39 +1,34 @@
-package pizzadevourers.server;
+package pizzadevourers.server.databasePojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pizzadevourers.server.databasePojo.OrderedProduct;
 
 import java.util.List;
 
 @Document
-public class Orders {
+public class Receipt {
     @Id
     private String _id;
 
-    private String order_id;
     private String user_id;
     private List<OrderedProduct> ordered_products;
     private int amount;
+    private int tax;
 
-    public Orders(String _id, String order_id, String user_id, List<OrderedProduct> productsList, int amount) {
+    public Receipt(String _id, String user_id, List<OrderedProduct> productsList, int amount, int tax) {
         this._id = _id;
-        this.order_id = order_id;
         this.user_id = user_id;
         this.ordered_products = productsList;
         this.amount = amount;
+        this.tax = tax;
     }
 
     public String get_id() {
         return _id;
     }
 
-    public String getOrder_id() {
-        return order_id;
-    }
-
-    public void setOrder_id(String order_id) {
-        this.order_id = order_id;
-    }
+    public void set_id(String _id){this._id = _id;}
 
     public String getUser_id() {
         return user_id;
@@ -57,5 +52,19 @@ public class Orders {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public void setTax(int tax){this.tax = tax;}
+
+    public int getTax(){return tax;}
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "_id='" + _id + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", ordered_products=" + ordered_products +
+                ", amount=" + amount +
+                '}';
     }
 }
