@@ -1,11 +1,15 @@
 package pizzadevourers.server;
 
-import org.apache.catalina.Server;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Document
 public class Users {
@@ -33,6 +37,28 @@ public class Users {
     public boolean verifyHash(String password, String hash) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         return encoder.matches(password, hash);
+    }
+
+
+    public boolean containsAllRequiredFields(){
+        Pattern singleWord3to50chars = Pattern.compile("^[A-Za-z]{3,50}$");
+        Pattern multipleWords3to100chars = Pattern.compile("^.{3,100}$");
+        Pattern phonePattern = Pattern.compile("(?<!\\w)(\\(?(\\+|00)?48\\)?)?[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)");
+        ArrayList<Matcher> matcher = new ArrayList<>();
+
+        matcher.add(singleWord3to50chars.matcher(username));
+        matcher.add(multipleWords3to100chars.matcher(password));
+        matcher.add(singleWord3to50chars.matcher(first_name));
+        matcher.add(multipleWords3to100chars.matcher(last_name));
+        matcher.add(multipleWords3to100chars.matcher(address));
+        matcher.add(phonePattern.matcher(telephone));
+
+        for (Matcher m: matcher) {
+            if(!m.matches()){
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -97,8 +123,4 @@ public class Users {
         this.created_on = created_on;
     }
 
-    @Override
-    public String toString() {
-        return "user_id";
-    }
 }

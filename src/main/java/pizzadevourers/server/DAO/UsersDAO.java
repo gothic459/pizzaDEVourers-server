@@ -38,9 +38,9 @@ public class UsersDAO {
     public boolean register(Users user){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(user.getUsername()));
-        List<Users> users = mongoTemplate.find(query, Users.class);
+        List<Users> usersFoundInDatabase = mongoTemplate.find(query, Users.class);
 
-        if(users.isEmpty()){
+        if(usersFoundInDatabase.isEmpty() && user.containsAllRequiredFields()){
             mongoTemplate.insert(user);
             return true;
         }
