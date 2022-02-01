@@ -1,4 +1,4 @@
-package pizzadevourers.server;
+package pizzadevourers.server.databasePojo;
 
 public class OrderedProduct {
     private String product_id;

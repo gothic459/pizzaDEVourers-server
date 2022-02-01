@@ -1,4 +1,4 @@
-package pizzadevourers.server;
+package pizzadevourers.server.databasePojo;
 
 public class LoginUser {
     private String username;

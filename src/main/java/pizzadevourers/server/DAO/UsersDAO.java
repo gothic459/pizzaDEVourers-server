@@ -1,15 +1,20 @@
 package pizzadevourers.server.DAO;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import pizzadevourers.server.LoginUser;
-import pizzadevourers.server.Users;
+import pizzadevourers.server.databasePojo.LoginUser;
+import pizzadevourers.server.databasePojo.Users;
 
+import javax.management.InstanceAlreadyExistsException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -21,17 +26,24 @@ public class UsersDAO {
         return mongoTemplate.findAll(Users.class);
     }
 
-    public boolean login(LoginUser loginUser){
+    public String login(LoginUser loginUser){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(loginUser.getUsername()));
         List<Users> users = mongoTemplate.find(query, Users.class);
+
         if(users.isEmpty()){
-            return false;
+            return "false";
         }
         else
         {
-            Users userInDatabase = users.get(0);
-            return userInDatabase.verifyHash(loginUser.getPassword(), userInDatabase.getPassword());
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            String token = JWT.create()
+                    .withIssuer("auth0")
+                    .withKeyId(users.get(0).get_id())
+                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 60 * 1000)))
+                    .sign(algorithm);
+
+            return token;
         }
     }
 

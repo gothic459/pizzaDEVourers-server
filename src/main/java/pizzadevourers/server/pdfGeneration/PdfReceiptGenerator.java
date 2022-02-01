@@ -1,4 +1,4 @@
-package pizzadevourers.server;
+package pizzadevourers.server.pdfGeneration;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
@@ -6,6 +6,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import pizzadevourers.server.databasePojo.Product;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

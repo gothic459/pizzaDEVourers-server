@@ -1,12 +1,14 @@
 package pizzadevourers.server.DAO;
 
 import com.itextpdf.text.DocumentException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
-import pizzadevourers.server.*;
+import pizzadevourers.server.databasePojo.OrderFromUser;
+import pizzadevourers.server.databasePojo.OrderedProduct;
+import pizzadevourers.server.databasePojo.Receipt;
+import pizzadevourers.server.pdfGeneration.PdfReceiptGenerator;
+import pizzadevourers.server.databasePojo.Product;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -19,7 +21,7 @@ public class ReceiptDAO {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public void save(List<Product> availableProducts, final OrderFromUser order) throws DocumentException, FileNotFoundException {
+    public String save(String userID, List<Product> availableProducts, final OrderFromUser order) throws DocumentException, FileNotFoundException {
         LinkedList<Product> orderedProducts = new LinkedList<>();
         LinkedList<Integer> quantities = new LinkedList<>();
         int total = 0;
@@ -40,6 +42,7 @@ public class ReceiptDAO {
         PdfReceiptGenerator pdfReceiptGenerator = new PdfReceiptGenerator(receiptUUID, orderedProducts, quantities , total, tax);
         pdfReceiptGenerator.generateReceipt();
 
-        mongoTemplate.insert(new Receipt(receiptUUID, "user_id", order.getOrdered_products() , total, tax));
+        mongoTemplate.insert(new Receipt(receiptUUID, userID, order.getOrdered_products() , total, tax));
+        return receiptUUID;
     }
 }

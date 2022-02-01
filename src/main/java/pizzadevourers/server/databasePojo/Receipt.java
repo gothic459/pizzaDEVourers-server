@@ -1,9 +1,9 @@
-package pizzadevourers.server;
+package pizzadevourers.server.databasePojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pizzadevourers.server.databasePojo.OrderedProduct;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Document

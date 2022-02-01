@@ -1,25 +1,22 @@
-package pizzadevourers.server;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package pizzadevourers.server.databasePojo;
 
 import java.util.List;
 
 public class OrderFromUser {
-    private String user_id;
+    private String userJWT;
     private List<OrderedProduct> ordered_products;
 
-    public OrderFromUser(String user_id, List<OrderedProduct> ordered_products) {
-        this.user_id = user_id;
+    public OrderFromUser(String userJWT, List<OrderedProduct> ordered_products) {
+        this.userJWT = userJWT;
         this.ordered_products = ordered_products;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String get_userJWT() {
+        return userJWT;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void set_userJWT(String userJWT) {
+        this.userJWT = userJWT;
     }
 
     public List<OrderedProduct> getOrdered_products() {
@@ -33,7 +30,7 @@ public class OrderFromUser {
     @Override
     public String toString() {
         return "OrderFromUser{" +
-                "user_id='" + user_id + '\'' +
+                "userJWT='" + userJWT + '\'' +
                 ", ordered_products=" + ordered_products.toString() +
                 '}';
     }
