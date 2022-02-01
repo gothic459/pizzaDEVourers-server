@@ -1,4 +1,4 @@
-package pizzadevourers.server;
+package pizzadevourers.server.databasePojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -55,5 +55,16 @@ public class Product {
 
     public void setVat(int vat) {
         this.vat = vat;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "_id='" + _id + '\'' +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", price=" + price +
+                ", vat=" + vat +
+                '}';
     }
 }

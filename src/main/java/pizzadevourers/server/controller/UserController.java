@@ -3,8 +3,8 @@ package pizzadevourers.server.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pizzadevourers.server.DAO.UsersDAO;
-import pizzadevourers.server.LoginUser;
-import pizzadevourers.server.Users;
+import pizzadevourers.server.databasePojo.LoginUser;
+import pizzadevourers.server.databasePojo.Users;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody final LoginUser loginUser) {return usersDAO.login(loginUser);}
+    public String login(@RequestBody final LoginUser loginUser) {return usersDAO.login(loginUser);}
     /*
     @GetMapping("/users/{userId}")
     public Users findUser(@PathVariable final String userId){
