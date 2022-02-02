@@ -10,13 +10,15 @@ public class Product {
 
     private String name;
     private String desc;
+    private String image;
     private int price;
     private int vat;
 
-    public Product(String _id, String name, String desc, int price, int vat) {
+    public Product(String _id, String name, String desc, String image, int price, int vat) {
         this._id = _id;
         this.name = name;
         this.desc = desc;
+        this.image = image;
         this.price = price;
         this.vat = vat;
     }
@@ -36,6 +38,10 @@ public class Product {
     public String getDesc() {
         return desc;
     }
+
+    public String getImage() {return image;}
+
+    public void setImage(String image) {this.image = image;}
 
     public void setDesc(String desc) {
         this.desc = desc;
