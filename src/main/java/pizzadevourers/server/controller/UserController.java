@@ -24,7 +24,7 @@ public class UserController {
      * @param user object of User class - required in the POST method
      * @return true if register is successful. false if user data is insufficient or does not meet the requirements.
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://pizzadev-front.herokuapp.com")
     @PostMapping("/register")
     public boolean register(@RequestBody final Users user){
         return usersDAO.register(user);
@@ -42,7 +42,7 @@ public class UserController {
      * @param loginUser object of LoginUser class - required in the POST method
      * @return JSON Web Token if register is successful. false if credentials are incorrect or username doesn't exist.
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://pizzadev-front.herokuapp.com")
     @PostMapping("/login")
     public String login(@RequestBody final LoginUser loginUser) {return usersDAO.login(loginUser);}
 

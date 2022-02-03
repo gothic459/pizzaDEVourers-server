@@ -18,7 +18,7 @@ public class ProductController {
     @Autowired
     private ProductDAO productsDAO;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://pizzadev-front.herokuapp.com")
     @GetMapping("/menu")
     public List<Product> findProducts() {return productsDAO.findAll();}
 }

@@ -36,7 +36,7 @@ public class ReceiptController {
      * @param orderFromUser object of User class - required in the POST method
      * @return UUID of order if successful - false otherwise.
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://pizzadev-front.herokuapp.com")
     @PostMapping("/sendOrder")
     public String addOrder(@RequestBody final OrderFromUser orderFromUser) throws DocumentException, FileNotFoundException {
         String userJWT = orderFromUser.get_userJWT();
