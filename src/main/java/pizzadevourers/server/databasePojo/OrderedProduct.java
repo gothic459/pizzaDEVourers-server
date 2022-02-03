@@ -1,7 +1,12 @@
 package pizzadevourers.server.databasePojo;
 
+/**
+ * Class used to map products ordered by the user.
+ */
 public class OrderedProduct {
+    /** ID of ordered product */
     private String product_id;
+    /** quantity of ordered product */
     private int quantity;
 
     public OrderedProduct(String product_id, int amount) {

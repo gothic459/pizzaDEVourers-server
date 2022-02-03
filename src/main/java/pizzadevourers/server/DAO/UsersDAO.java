@@ -17,15 +17,23 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Class used to exercise control over endpoint connected with users and their authentication.
+ */
 @Repository
 public class UsersDAO {
+    /** MongoTemplate instance */
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /*
     public List<Users> findAll(){
         return mongoTemplate.findAll(Users.class);
     }
+     */
 
+    /** Method used to authenticate users, by parsing data from database and comparing it to username and password in JSON file.
+     * @return JWT token if login was successful, "false" otherwise. */
     public String login(LoginUser loginUser){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(loginUser.getUsername()));
@@ -47,6 +55,8 @@ public class UsersDAO {
         }
     }
 
+    /** Method used to create accounts for users, by checking if username already exists in the database - if it does not, then it creates a new user.
+     * @return "true" if register was successful, "false" otherwise. */
     public boolean register(Users user){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").is(user.getUsername()));
