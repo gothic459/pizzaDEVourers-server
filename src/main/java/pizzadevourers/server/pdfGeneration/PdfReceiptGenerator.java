@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+/**
+ * Creates an .pdf file for each and every order made by the user. Name of the file is order UUID passed in constructor.
+ */
 public class PdfReceiptGenerator {
     private static final String name_of_restaurant = "pizzaDEVourers";
     private static final String description = "u nas nie uswiadczysz buga";
@@ -23,11 +26,18 @@ public class PdfReceiptGenerator {
     private Font bold = FontFactory.getFont(FontFactory.COURIER,24, Font.BOLD, BaseColor.BLACK);
     private Font normal = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
 
+
+    /** Total in PLN */
     private int total;
+    /** Total tax in PLN */
     private int total_tax;
+    /** LinkedList of Product objects - which user has ordered */
     private LinkedList<Product> orderedProducts;
+    /** LinkedList of Integers - quantities of products that user has ordered. */
     private LinkedList<Integer> quantities;
+    /** Unique ID of receipt (used as filename) */
     private String receiptUUID;
+
 
     public PdfReceiptGenerator(String receiptUUID, LinkedList<Product> op, LinkedList<Integer> quantities, int total, int tax){
         this.receiptUUID = receiptUUID;
@@ -37,6 +47,11 @@ public class PdfReceiptGenerator {
         this.total_tax = tax;
     }
 
+    /**
+     * Generates the receipt from pre-defined template. Saves it as {{receiptUUID}}.pdf
+     * @throws FileNotFoundException
+     * @throws DocumentException
+     */
     public void generateReceipt() throws FileNotFoundException, DocumentException {
         Document doc = new Document();
         PdfWriter.getInstance(doc, new FileOutputStream(receiptUUID + ".pdf"));
@@ -74,6 +89,11 @@ public class PdfReceiptGenerator {
         total = 0;
     }
 
+    /**
+     * Adds price to currently rendered item. Price is multiplied by quantities of product.
+     * @param index index of item which is getting printed on the receipt.
+     * @param table reference to table. Every cell gets added to table at the end of method.
+     */
     private void addPrice(int index, PdfPTable table){
         int price = orderedProducts.get(index).getPrice() * quantities.get(index);
         PdfPCell cell = new PdfPCell(new Phrase((price/100) + "," + (Math.abs(price%100)==0 ? "00" : Math.abs(price%100)) +" PLN", FontFactory.getFont(FontFactory.COURIER, 13)));
@@ -82,6 +102,11 @@ public class PdfReceiptGenerator {
         table.addCell(cell);
     }
 
+    /**
+     * Adds product name to currently rendered item.
+     * @param index index of item which is getting printed on the receipt.
+     * @param table reference to table. Every cell gets added to table at the end of method.
+     */
     private void addProduct(int index, PdfPTable table){
         PdfPCell cell = new PdfPCell(new Phrase(orderedProducts.get(index).getName() + " * " +  quantities.get(index) + "szt", FontFactory.getFont(FontFactory.COURIER, 13)));
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -89,6 +114,14 @@ public class PdfReceiptGenerator {
         table.addCell(cell);
     }
 
+    /**
+     * Adds row to a PdfTable.
+     * @param table reference to parent table
+     * @param phase phase to be printed into parent table
+     * @param amount amount of money to be printed into the parent table
+     * @param font_type type of font used in printing
+     * @param font_size size of font used in printing
+     */
     private void addRow(PdfPTable table, String phase, int amount,String font_type, int font_size){
         PdfPCell cell = new PdfPCell(new Phrase(phase, FontFactory.getFont(font_type, font_size)));
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -101,6 +134,11 @@ public class PdfReceiptGenerator {
         table.addCell(cell2);
     }
 
+    /**
+     * Prints header of the document. It's part of the template.
+     * @param doc reference to document for header to be printed on.
+     * @throws DocumentException
+     */
     private void printHeader(Document doc) throws DocumentException {
 
         Paragraph name = new Paragraph(name_of_restaurant, bold);
@@ -145,9 +183,14 @@ public class PdfReceiptGenerator {
         doc.add(Chunk.NEWLINE);
     }
 
+    /**
+     * Prints footer of the document. It's part of the template.
+     * @param doc reference to document for header to be printed on.
+     * @throws DocumentException
+     */
     private void printFooter(Document doc) throws DocumentException {
         Paragraph receipt_id = new Paragraph("ID rachunku: " + receiptUUID, normal);
-        Paragraph thank_you = new Paragraph("DZIĘKUJEMY I ZAPRASZAMY PONOWNIE!", normal);
+        Paragraph thank_you = new Paragraph("DZIEKUJEMY I ZAPRASZAMY PONOWNIE!", normal);
 
         receipt_id.setAlignment(Element.ALIGN_CENTER);
         thank_you.setAlignment(Element.ALIGN_CENTER);

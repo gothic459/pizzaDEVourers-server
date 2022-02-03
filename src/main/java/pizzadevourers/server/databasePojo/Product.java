@@ -3,15 +3,22 @@ package pizzadevourers.server.databasePojo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/** Class used to map Products in the database */
 @Document
 public class Product {
+    /** ID of the product in database */
     @Id
     private String _id;
 
+    /** Name of the product */
     private String name;
+    /** Description of the product */
     private String desc;
+    /** Image of the product */
     private String image;
+    /** Price of the product */
     private int price;
+    /** Tax of the product */
     private int vat;
 
     public Product(String _id, String name, String desc, String image, int price, int vat) {

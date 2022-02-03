@@ -2,8 +2,13 @@ package pizzadevourers.server.databasePojo;
 
 import java.util.List;
 
+/**
+ * Class used to map order sent by the user.
+ */
 public class OrderFromUser {
+    /** JWT of logged in user */
     private String userJWT;
+    /** List of ordered products */
     private List<OrderedProduct> ordered_products;
 
     public OrderFromUser(String userJWT, List<OrderedProduct> ordered_products) {

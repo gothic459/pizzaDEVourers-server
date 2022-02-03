@@ -6,14 +6,20 @@ import pizzadevourers.server.databasePojo.OrderedProduct;
 
 import java.util.List;
 
+/** Class used to collect objects in database. */
 @Document
 public class Receipt {
+    /** ID of an record within the database */
     @Id
     private String _id;
 
+    /** ID of user ordering */
     private String user_id;
+    /** List of ordered products */
     private List<OrderedProduct> ordered_products;
+    /** Total in PLN */
     private int amount;
+    /** Total tax in PLN */
     private int tax;
 
     public Receipt(String _id, String user_id, List<OrderedProduct> productsList, int amount, int tax) {

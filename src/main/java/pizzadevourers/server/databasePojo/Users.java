@@ -11,17 +11,28 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class used to map new users - from /register endpoint.
+ */
 @Document
 public class Users {
+    /** User ID in database */
     @Id
     private String _id;
 
+    /** User's username (single word A-Z and a-z 3-50 chars) (required)*/
     private String username;
+    /** User's password (any 3-100 chars) (required)*/
     private String password;
+    /** User's first name (single word A-Z and a-z 3-50 chars) (required)*/
     private String first_name;
+    /** User's last name (any 3-100 chars) (required)*/
     private String last_name;
+    /** User's address (any 3-100 chars) (required)*/
     private String address;
+    /** User's telephone (9 digits) (required)*/
     private String telephone;
+    /** Timestamp of user creation in database */
     private String created_on;
 
 
@@ -29,18 +40,22 @@ public class Users {
     public Users() {
     }
 
+    /** Creates an BCrypt salted hash from plain-text password */
     public String hash(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         return encoder.encode(password);
     }
 
+    /*
     public boolean verifyHash(String password, String hash) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         return encoder.matches(password, hash);
     }
+     */
 
-
+    /** Checks if the data provided by the user is allowed on the server. Rules are provided with the declaration of variables. */
     public boolean containsAllRequiredFields(){
+        //TODO: make regex less versatile
         Pattern singleWord3to50chars = Pattern.compile("^[A-Za-z]{3,50}$");
         Pattern multipleWords3to100chars = Pattern.compile("^.{3,100}$");
         Pattern phonePattern = Pattern.compile("(?<!\\w)(\\(?(\\+|00)?48\\)?)?[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)");

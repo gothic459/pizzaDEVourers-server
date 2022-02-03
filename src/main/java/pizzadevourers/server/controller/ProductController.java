@@ -8,8 +8,12 @@ import pizzadevourers.server.databasePojo.Product;
 
 import java.util.List;
 
+/**
+ * Class used to exercise control over /menu endpoint.
+ */
 @RestController
 public class ProductController {
+    /** Instance of ProductDAO */
     @Autowired
     private ProductDAO productsDAO;
 

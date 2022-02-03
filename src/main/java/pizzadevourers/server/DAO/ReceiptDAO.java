@@ -16,11 +16,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Class used to exercise control over endpoint connected with users and their authentication.
+ */
 @Repository
 public class ReceiptDAO {
+    /**
+     * Instance of mongoTemplate
+     */
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * Method saves order from /saveOrder endpoint, and creates new instance of PdfReceiptGenerator in order to generate a receipt.
+     * @param userID ID of user who has ordered it
+     * @param availableProducts list of Product objects from database
+     * @param order instance of OrderFromUser class
+     * @return generated receiptUUID
+     * @throws DocumentException
+     * @throws FileNotFoundException
+     */
     public String save(String userID, List<Product> availableProducts, final OrderFromUser order) throws DocumentException, FileNotFoundException {
         LinkedList<Product> orderedProducts = new LinkedList<>();
         LinkedList<Integer> quantities = new LinkedList<>();
