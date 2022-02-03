@@ -44,14 +44,18 @@ public class UsersDAO {
         }
         else
         {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
-            String token = JWT.create()
-                    .withIssuer("auth0")
-                    .withKeyId(users.get(0).get_id())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 60 * 1000)))
-                    .sign(algorithm);
+            Users lu = users.get(0);
+            if(lu.verifyHash(loginUser.getPassword(), lu.getPassword())){
+                Algorithm algorithm = Algorithm.HMAC256("secret");
+                String token = JWT.create()
+                        .withIssuer("auth0")
+                        .withKeyId(users.get(0).get_id())
+                        .withExpiresAt(new Date(System.currentTimeMillis() + (20 * 60 * 1000)))
+                        .sign(algorithm);
 
-            return token;
+                return token;
+            }
+            return "false";
         }
     }
 
