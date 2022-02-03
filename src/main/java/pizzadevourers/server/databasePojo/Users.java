@@ -46,12 +46,10 @@ public class Users {
         return encoder.encode(password);
     }
 
-    /*
     public boolean verifyHash(String password, String hash) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
         return encoder.matches(password, hash);
     }
-     */
 
     /** Checks if the data provided by the user is allowed on the server. Rules are provided with the declaration of variables. */
     public boolean containsAllRequiredFields(){

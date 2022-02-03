@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,7 @@ public class ReceiptController {
      * @param orderFromUser object of User class - required in the POST method
      * @return UUID of order if successful - false otherwise.
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/sendOrder")
     public String addOrder(@RequestBody final OrderFromUser orderFromUser) throws DocumentException, FileNotFoundException {
         String userJWT = orderFromUser.get_userJWT();
